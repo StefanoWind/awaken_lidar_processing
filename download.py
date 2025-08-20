@@ -26,12 +26,12 @@ warnings.filterwarnings('ignore')
 if len(sys.argv)==1:
     t_start='2023-11-21' #start date
     t_end='2023-11-22' #end date
-    mfa=True
+    mfa=False
     path_config=os.path.join(cd,'configs/config_awaken.yaml') #config path
 else:
     t_start=sys.argv[1] #start date
     t_end=sys.argv[2]  #end date
-    mfa=sys.argv[3] #use MFA on WDH
+    mfa=sys.argv[3]=="True" #use MFA on WDH
     path_config=os.path.join(cd,'config',sys.argv[4])#config path
     
 #%% Initalization
