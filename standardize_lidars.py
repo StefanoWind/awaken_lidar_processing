@@ -75,7 +75,7 @@ def standardize_file(file,save_path_stand,config,logfile_main,sdate,edate,replac
 #standardize all files within date range
 for c in config['channels']:
     channel=config['channels'][c]
-    files=glob.glob(os.path.join(config['path_data'],channel,config['wildcard_stand'][c]))
+    files=sorted(glob.glob(os.path.join(config['path_data'],channel,config['wildcard_stand'][c])))
     if mode=='serial':
         for f in files:
               standardize_file(f,None,config,logfile_main,sdate,edate,replace,delete)
