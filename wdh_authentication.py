@@ -12,7 +12,7 @@ else:
     login=sys.argv[1]
 
 #%% Main
-a2e = DAP('a2e.energy.gov',confirm_downloads=False)
+a2e = DAP('wdh.energy.gov',confirm_downloads=False)
 
 if login=='mfa':
     a2e.setup_two_factor_auth()
