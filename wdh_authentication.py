@@ -2,21 +2,19 @@
 '''
 Authenticate in MFA
 '''
+import os
+cd=os.path.dirname(__file__)
 from doe_dap_dl import DAP
-import sys
+import yaml
 
 #%% Inputs
-if len(sys.argv)==1:
-    login='mfa'
-else:
-    login=sys.argv[1]
+path_config=os.path.join(cd,'configs/config_awaken.yaml') #config path
+
+#%% Initialization
+a2e = DAP('wdh.energy.gov',confirm_downloads=False)
+#configs
+with open(path_config, 'r') as fid:
+    config = yaml.safe_load(fid)
 
 #%% Main
-a2e = DAP('wdh.energy.gov',confirm_downloads=False)
-
-if login=='mfa':
-    a2e.setup_two_factor_auth()
-elif login=='basic':
-    a2e.setup_cert_auth()
-else:
-    raise ValueError(r'login type should be mfa or basic, not {login}')
+a2e.setup_two_factor_auth(username=config['username'],password=['password'])
