@@ -24,8 +24,8 @@ warnings.filterwarnings('ignore')
 
 #users inputs
 if len(sys.argv)==1:
-    t_start='2023-05-01' #start date
-    t_end='2023-05-02' #end date
+    t_start='2023-05-09' #start date
+    t_end='2023-05-10' #end date
     path_config=os.path.join(cd,'configs/config_awaken.yaml') #config path
 else:
     t_start=sys.argv[1] #start date

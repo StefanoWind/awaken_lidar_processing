@@ -21,18 +21,17 @@ from multiprocessing import Pool
 import logging
 import re
 import glob
-import dual_doppler_processor as ddp
 warnings.filterwarnings('ignore')
 
 #%% Inputs
 
 #users inputs
 if len(sys.argv)==1:
-    sdate='2023-07-26' #start date
-    edate='2023-07-27' #end date
+    sdate='2023-05-09' #start date
+    edate='2023-05-10' #end date
     replace=False#replace existing files?
     delete=False #delete input files?
-    path_config=os.path.join(cd,'configs/config_awaken_vt.yaml') #config path
+    path_config=os.path.join(cd,'configs/config_awaken.yaml') #config path
     mode='serial'#serial or parallel
 else:
     sdate=sys.argv[1]
@@ -69,10 +68,11 @@ def standardize_file(file,save_path_stand,config,logfile_main,sdate,edate,replac
                 lf.write('\n --------------------------------- \n')
 
 #%% Main
-for channel in config['channels']:
+for s in config['channels']:
         
     #standardize all files within date range
-    files=glob.glob(os.path.join(config['path_data'],channel,config['wildcard_stand'][channel]))
+    channel=config['channels'][s]
+    files=glob.glob(os.path.join(config['path_data'],channel,config['wildcard_stand'][s]))
     if mode=='serial':
         for f in files:
               standardize_file(f,None,config,logfile_main,sdate,edate,replace,delete)
