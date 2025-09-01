@@ -29,7 +29,6 @@ warnings.filterwarnings('ignore')
 if len(sys.argv)==1:
     sdate='2023-05-09' #start date
     edate='2023-05-10' #end date
-    replace=False#replace existing files?
     delete=False #delete input files?
     path_config=os.path.join(cd,'configs/config_awaken.yaml') #config path
     mode='serial'#serial or parallel
@@ -37,9 +36,8 @@ else:
     sdate=sys.argv[1]
     edate=sys.argv[2] 
     delete=sys.argv[3]=="True"
-    delete=sys.argv[4]=="True"
-    path_config=sys.argv[5]
-    mode=sys.argv[6]#
+    path_config=sys.argv[4]
+    mode=sys.argv[5]#
     
 #%% Initalization
 
@@ -52,7 +50,7 @@ logfile_main=os.path.join(cd,'log',datetime.strftime(datetime.now(), '%Y%m%d.%H%
 os.makedirs('log',exist_ok=True)
 
 #%% Functions
-def standardize_file(file,save_path_stand,config,logfile_main,sdate,edate,replace,delete):
+def standardize_file(file,save_path_stand,config,logfile_main,sdate,edate,delete):
     date=re.search(r'\d{8}.\d{6}',file).group(0)[:8]
     if datetime.strptime(date,'%Y%m%d')>=datetime.strptime(sdate,'%Y-%m-%d') and datetime.strptime(date,'%Y%m%d')<=datetime.strptime(edate,'%Y-%m-%d'):
         try:
@@ -75,9 +73,9 @@ for s in config['channels']:
     files=glob.glob(os.path.join(config['path_data'],channel,config['wildcard_stand'][s]))
     if mode=='serial':
         for f in files:
-              standardize_file(f,None,config,logfile_main,sdate,edate,replace,delete)
+              standardize_file(f,None,config,logfile_main,sdate,edate,delete)
     elif mode=='parallel':
-        args = [(files[i],None, config,logfile_main,sdate,edate,replace,delete) for i in range(len(files))]
+        args = [(files[i],None, config,logfile_main,sdate,edate,delete) for i in range(len(files))]
         with Pool() as pool:
             pool.starmap(standardize_file, args)
     else:
