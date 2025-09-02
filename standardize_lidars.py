@@ -27,17 +27,19 @@ warnings.filterwarnings('ignore')
 
 #users inputs
 if len(sys.argv)==1:
-    sdate='2023-11-09' #start date
-    edate='2023-12-10' #end date
+    sdate='2024-11-01' #start date
+    edate='2025-12-31' #end date
     delete=False #delete input files?
+    replace=False #replace existing files?
     path_config=os.path.join(cd,'configs/config_awaken.yaml') #config path
     mode='serial'#serial or parallel
 else:
     sdate=sys.argv[1]
     edate=sys.argv[2] 
     delete=sys.argv[3]=="True"
-    path_config=sys.argv[4]
-    mode=sys.argv[5]#
+    replace=sys.argv[4]=="True"
+    path_config=sys.argv[5]
+    mode=sys.argv[6]#
     
 #%% Initalization
 
@@ -50,13 +52,13 @@ logfile_main=os.path.join(cd,'log',datetime.strftime(datetime.now(), '%Y%m%d.%H%
 os.makedirs('log',exist_ok=True)
 
 #%% Functions
-def standardize_file(file,save_path_stand,config,logfile_main,sdate,edate,delete):
+def standardize_file(file,save_path_stand,config,logfile_main,sdate,edate,delete,replace):
     date=re.search(r'\d{8}.\d{6}',file).group(0)[:8]
     if datetime.strptime(date,'%Y%m%d')>=datetime.strptime(sdate,'%Y-%m-%d') and datetime.strptime(date,'%Y%m%d')<=datetime.strptime(edate,'%Y-%m-%d'):
         try:
             logfile=os.path.join(cd,'log',os.path.basename(file).replace('nc','log'))
             lproc = lg.Standardize(file, config=config['path_config_stand'], verbose=True,logfile=logfile)
-            lproc.process_scan(replace=False, save_file=True, save_path=save_path_stand)
+            lproc.process_scan(replace=replace, save_file=True, save_path=save_path_stand)
             if delete:
                 os.remove(file)
         except:
@@ -73,9 +75,9 @@ for s in config['channels']:
     files=glob.glob(os.path.join(config['path_data'],channel,config['wildcard_stand'][s]))
     if mode=='serial':
         for f in files:
-              standardize_file(f,None,config,logfile_main,sdate,edate,delete)
+              standardize_file(f,None,config,logfile_main,sdate,edate,delete,replace)
     elif mode=='parallel':
-        args = [(files[i],None, config,logfile_main,sdate,edate,delete) for i in range(len(files))]
+        args = [(files[i],None, config,logfile_main,sdate,edate,delete,replace) for i in range(len(files))]
         with Pool() as pool:
             pool.starmap(standardize_file, args)
     else:
