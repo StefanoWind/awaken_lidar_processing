@@ -17,4 +17,4 @@ with open(path_config, 'r') as fid:
     config = yaml.safe_load(fid)
 
 #%% Main
-a2e.setup_two_factor_auth(username=config['username'],password=['password'])
+a2e.setup_two_factor_auth(username=config['username'],password=config['password'])

@@ -27,8 +27,8 @@ warnings.filterwarnings('ignore')
 
 #users inputs
 if len(sys.argv)==1:
-    sdate='2023-05-09' #start date
-    edate='2023-05-10' #end date
+    sdate='2023-11-09' #start date
+    edate='2023-12-10' #end date
     delete=False #delete input files?
     path_config=os.path.join(cd,'configs/config_awaken.yaml') #config path
     mode='serial'#serial or parallel
