@@ -16,7 +16,6 @@ from datetime import datetime
 from datetime import timedelta
 import yaml
 from doe_dap_dl import DAP
-from matplotlib import pyplot as plt
 
 warnings.filterwarnings('ignore')
 
@@ -30,7 +29,7 @@ if len(sys.argv)==1:
 else:
     t_start=sys.argv[1] #start date
     t_end=sys.argv[2]  #end date
-    path_config=os.path.join(cd,'config',sys.argv[3])#config path
+    path_config=sys.argv[3]#config path
     
 #%% Initalization
 print(f'Downloading lidar data from {t_start} to {t_end}: config={path_config}.')
