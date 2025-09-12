@@ -27,11 +27,11 @@ warnings.filterwarnings('ignore')
 
 #users inputs
 if len(sys.argv)==1:
-    sdate='2024-11-01' #start date
-    edate='2025-12-31' #end date
+    sdate='2023-02-20' #start date
+    edate='2023-03-01' #end date
     delete=False #delete input files?
-    replace=False #replace existing files?
-    path_config=os.path.join(cd,'configs/config_awaken.yaml') #config path
+    replace=True #replace existing files?
+    path_config=os.path.join(cd,'configs/config_pre-awaken.yaml') #config path
     mode='serial'#serial or parallel
 else:
     sdate=sys.argv[1]
