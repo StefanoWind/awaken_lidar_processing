@@ -275,8 +275,8 @@ def visualization(Data,config,save_path):
         fig=plt.figure(figsize=(18,10))
         ctr=1
         for x_plot in config['plot_locations']:
-            u_avg_int=Data['u_avg'].interp(x=[x_plot],method='linear').values
-            u_std_int=Data['u_std'].interp(x=[x_plot],method='linear').values
+            u_avg_int=Data['u_avg'].interp(x=[x_plot],method='linear').values.squeeze()
+            u_std_int=Data['u_std'].interp(x=[x_plot],method='linear').values.squeeze()
             TI_int=u_std_int/np.abs(u_avg_int)*100
             
             #plot mean velocity
