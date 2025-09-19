@@ -72,7 +72,7 @@ for s in config['channels']:
         
     #standardize all files within date range
     channel=config['channels'][s]
-    files=glob.glob(os.path.join(config['path_data'],channel,config['wildcard_stand'][s]))
+    files=sorted(glob.glob(os.path.join(config['path_data'],channel,config['wildcard_stand'][s])))
     if mode=='serial':
         for f in files:
               standardize_file(f,None,config,logfile_main,sdate,edate,delete,replace)
