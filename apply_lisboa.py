@@ -210,8 +210,8 @@ def visualization(Data,config,save_path):
     
     if 'z' in Data.coords:
         z=Data.z.values
-        u_avg_int=Data['u_avg'].sel(z=0).values
-        u_std_int=Data['u_std'].sel(z=0).values
+        u_avg_int=Data['u_avg'].sel(z=0,method='nearest').values
+        u_std_int=Data['u_std'].sel(z=0,method='nearest').values
     else:
         u_avg_int=Data['u_avg'].values
         u_std_int=Data['u_std'].values
